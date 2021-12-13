@@ -7,7 +7,6 @@ function myMap() {
 
     new google.maps.Marker({
         position: {lat: 51.508742, lng: -0.120850},
-        map,
-        title: "Hello World!"
+        map
     })
 }
