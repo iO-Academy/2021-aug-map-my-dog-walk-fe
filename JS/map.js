@@ -23,6 +23,8 @@ function myMap() {
             document.querySelector('#formWindow').addEventListener('submit', (e) => {
                 e.preventDefault()
                 handleSubmit(infoPosition)
+                infoWindow.close()
+                alert("New route added!")
             })
         });
     })
@@ -47,8 +49,8 @@ function generateForm() {
 async function handleSubmit(position) {
     let newRoute = {
         name: document.querySelector('#name').value,
-        length: document.querySelector('#length').value,
-        difficulty: document.querySelector('#difficulty').value,
+        length: parseInt(document.querySelector('#length').value),
+        difficulty: parseInt(document.querySelector('#difficulty').value),
         startInstructions: document.querySelector('#startInstructions').value,
         markersArray: [position]
     }
