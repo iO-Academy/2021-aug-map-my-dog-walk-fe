@@ -9,10 +9,11 @@ async function myMap() {
     let markers = await response.json();
 
     markers.forEach(function (marker) {
-        new google.maps.Marker({
+        let newMarker = new google.maps.Marker({
             position: marker.markersObject,
             map,
             title: marker.name
         })
+        newMarker.id = marker.id;
     })
 }
