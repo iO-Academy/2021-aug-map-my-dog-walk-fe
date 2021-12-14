@@ -4,11 +4,17 @@ async function myMap() {
         zoom:5
     };
     const map = new google.maps.Map(document.querySelector("#map"),mapProp);
+    let markersArray = await fetchData('http://localhost:3000/markers');
+    addMarkers(markersArray, map);
+}
 
-    let response =  await fetch('http://localhost:3000/markers');
-    let markers = await response.json();
+async function fetchData(url) {
+    let response =  await fetch(url);
+    return await response.json();
+}
 
-    markers.forEach(function (marker) {
+async function addMarkers(markersArray, map) {
+    markersArray.forEach(function (marker) {
         let newMarker = new google.maps.Marker({
             position: marker.markersObject,
             map,
