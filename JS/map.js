@@ -5,13 +5,8 @@ function myMap() {
     };
     const map = new google.maps.Map(document.querySelector("#map"),mapProp);
 
-    // new google.maps.Marker({
-    //     position: {lat: 51.508742, lng: -0.120850},
-    //     map
-    // })
-
     let infoWindow = new google.maps.InfoWindow({
-        title: "Potatoes"
+        title: "Click anywhere to add a new route"
     });
 
     map.addListener("click", (mapsMouseEvent) => {
