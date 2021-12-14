@@ -24,4 +24,5 @@ async function displayWalkInfo(id) {
     document.querySelector('#time').innerHTML = data.length;
     document.querySelector('#instructions').innerHTML = data.startInstructions;
     document.querySelector('#difficulty').innerHTML = data.difficulty;
+    document.querySelector('#markerMode').style.visibility = "visible";
 }
