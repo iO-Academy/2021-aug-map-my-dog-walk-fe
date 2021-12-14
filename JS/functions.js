@@ -2,7 +2,7 @@
 function generateForm() {
     let formContent = '<form class="d-flex flex-column" id="formWindow">'
     formContent += '<label for="name"></label>'
-    formContent += '<input type="text" id="name" name="name" minlength="0" maxlength="20" placeholder="Name of walk..." />'
+    formContent += '<input type="text" id="name" name="name" minlength="5" maxlength="20" placeholder="Name of walk..." />'
     formContent += '<label for="length" class="mt-2">Length of Walk (mins)</label>'
     formContent += '<input type="number" id="length" name="length" min="0" max="500" />'
     formContent += '<label for="difficulty" class="mt-2">Difficulty</label>'
