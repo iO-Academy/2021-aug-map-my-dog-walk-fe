@@ -1,3 +1,4 @@
+
 function generateForm() {
     let formContent = '<form class="d-flex flex-column" id="formWindow">'
     formContent += '<label for="name"></label>'
@@ -26,5 +27,21 @@ async function handleSubmit(position) {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newRoute)
+    })
+}
+
+async function fetchData(url) {
+    let response =  await fetch(url);
+    return await response.json();
+}
+
+async function addMarkers(markersArray, map) {
+    markersArray.forEach(function (marker) {
+        let newMarker = new google.maps.Marker({
+            position: marker.markersObject,
+            map,
+            title: marker.name
+        })
+        newMarker.id = marker.id;
     })
 }
