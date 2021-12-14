@@ -16,12 +16,11 @@ async function addMarkers(markersArray, map) {
         let newMarker = new google.maps.Marker({
             position: marker.markersObject,
             map,
-            title: marker.name
+            title: marker.name,
+            id: marker.id,
+            difficulty: marker.difficulty,
+            icon: markerIcons[marker.difficulty]
         })
-        newMarker.id = marker.id;
-        newMarker.difficulty = marker.difficulty;
-        newMarker.setIcon(markerIcons[newMarker.difficulty]);
-        // Marker Event Listener
         google.maps.event.addListener(newMarker, "click", function() {
             displayWalkInfo(newMarker.id);
         })
