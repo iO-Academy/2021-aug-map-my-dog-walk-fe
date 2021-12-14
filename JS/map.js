@@ -1,12 +1,18 @@
-function myMap() {
+async function myMap() {
     let mapProp= {
         center: {lat: 51.508742, lng: -0.120850},
         zoom:5
     };
     const map = new google.maps.Map(document.querySelector("#map"),mapProp);
 
-    new google.maps.Marker({
-        position: {lat: 51.508742, lng: -0.120850},
-        map
+    let response =  await fetch('http://localhost:3000/markers');
+    let markers = await response.json();
+
+    markers.forEach(function (marker) {
+        new google.maps.Marker({
+            position: marker.markersObject,
+            map,
+            title: marker.name
+        })
     })
 }
