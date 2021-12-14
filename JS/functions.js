@@ -11,9 +11,17 @@ async function addMarkers(markersArray, map) {
             title: marker.name
         })
         newMarker.id = marker.id;
+        // Marker Event Listener
+        google.maps.event.addListener(newMarker, "click", function() {
+            displayWalkInfo(newMarker.id)
+        })
     })
 }
 
-async function displayWalkInfo($marker) {
-    await fetch();
+async function displayWalkInfo(id) {
+    const data = await fetchData('http://localhost:3000/markers/' + id);
+    document.querySelector('#mapName').innerHTML = data.name;
+    document.querySelector('#time').innerHTML = data.length;
+    document.querySelector('#instructions').innerHTML = data.startInstructions;
+    document.querySelector('#difficulty').innerHTML = data.difficulty;
 }
