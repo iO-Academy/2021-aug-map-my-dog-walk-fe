@@ -25,8 +25,8 @@ async function myMap() {
                 e.preventDefault()
                 let response = handleSubmit(infoPosition)
                 infoWindow.close()
-                response.then((response) => {
-                    document.querySelector('#addRoute').textContent = response.ok ? 'Route added!' : 'Something went wrong :('
+                response.then(res => res.json()).then((response) => {
+                    document.querySelector('#addRoute').textContent = (response.message)
                     }
                 )
             })
