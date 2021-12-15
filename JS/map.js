@@ -13,7 +13,7 @@ async function myMap() {
 
     markers.forEach(function (marker) {
         let newMarker = new google.maps.Marker({
-            position: marker.markersObject,
+            position: marker.markersObject.position,
             map,
             title: marker.name
         })
@@ -38,7 +38,6 @@ async function myMap() {
         e.preventDefault()
         let id = markerMode.value
         let url = 'http://localhost:3000/markers/' + id
-        console.log(url)
         fetch(url,{
             method: 'PUT',
             headers: {
@@ -46,7 +45,9 @@ async function myMap() {
             },
             body: JSON.stringify(miniMarkers)
         }).then((response) => {
-            if(response.ok){
+            response.json()
+        }).then((data) => {
+            if(data){
                 markerMode.value = ''
                 miniMarkers = []
             }

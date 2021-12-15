@@ -38,12 +38,10 @@ async function fetchData(url, method = {}) {
 
 async function addMarkers(markersArray, map) {
     markersArray.forEach(function (marker) {
-        let newMarker = new google.maps.Marker({
-            position: marker.markersObject,
-            map: map,
-            title: marker.name
-        })
+        console.log(marker)
+        let newMarker = new google.maps.Marker({...marker.markersObject, map: map})
         newMarker.id = marker.id;
+        newMarker.name = marker.name
         // Marker Event Listener
         google.maps.event.addListener(newMarker, "click", function() {
             displayWalkInfo(newMarker.id)
