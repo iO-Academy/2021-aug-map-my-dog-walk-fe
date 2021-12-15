@@ -31,7 +31,7 @@ async function myMap() {
             },
             body: JSON.stringify(miniMarkers)
         }).then((response) => {
-            response.json()
+            return response.json()
         }).then((data) => {
             if(data){
                 markerMode.value = ''
