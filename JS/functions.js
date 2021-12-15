@@ -38,7 +38,6 @@ async function fetchData(url, method = {}) {
 
 async function addMarkers(markersArray, map) {
     markersArray.forEach(function (marker) {
-        console.log(marker)
         let newMarker = new google.maps.Marker({...marker.markersObject, map: map})
         newMarker.id = marker.id;
         newMarker.name = marker.name
