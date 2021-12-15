@@ -23,7 +23,7 @@ async function handleSubmit(position) {
         markersArray: [position]
     }
 
-    return fetch('http://localhost:3000', {
+    return fetch('http://localhost:3000/walks', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newWalk)
