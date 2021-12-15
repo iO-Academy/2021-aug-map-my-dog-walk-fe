@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+}
+
+h1 {
+    background-image: url(https://media0.giphy.com/media/R1MlWX6NHdJogpH0HO/giphy.gif?cid=ecf05e47fseno6hiyxq5juaaho8bwz9ucp26dcn0268d0i9k&rid=giphy.gif&ct=g);
+    background-size: 390px;
+    background-position-x: center;
+    background-repeat: round;
+    color: transparent;
+    -webkit-background-clip: text;
+    text-transform: uppercase;
+    font-size: 100px;
+    line-height: .75;
+}
+
+body {
+    margin:0;
+    font-family: "Arial Rounded MT Bold";
+    font-size:25px;
+}
+
+.bg {
+    animation:slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, #FFE066 50%, #247BA0 50%);
+    bottom:0;
+    left:-50%;
+    opacity:.5;
+    position:fixed;
+    right:-50%;
+    top:0;
+    z-index:-1;
+}
+
+.bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:15s;
+}
+
+.bg3 {
+    animation-duration:15s;
+}
+
+@keyframes slide {
+    0% {
+        transform:translateX(-25%);
+    }
+    100% {
+        transform:translateX(25%);
+    }
+}
+
+
+
+
+
