@@ -40,7 +40,7 @@ async function addMarkers(markersArray, map) {
         let newMarker = new google.maps.Marker({
             position: marker.markersObject,
             map,
-            title: marker.name
+            title: marker.walkName
         })
         newMarker.id = marker.id;
     })
