@@ -9,7 +9,7 @@ async function myMap() {
     let response =  await fetch('http://localhost:3000/markers');
     let markers = await response.json();
 
-    markers.forEach(function (marker) {
+    markers.data.forEach(function (marker) {
         let newMarker = new google.maps.Marker({
             position: marker.markersObject,
             map,
@@ -111,5 +111,5 @@ async function myMap() {
     })
 
     let markersArray = await fetchData('http://localhost:3000/markers');
-    addMarkers(markersArray, map);
+    addMarkers(markersArray.data, map);
 }
