@@ -3,7 +3,7 @@ const markerMode = document.querySelector('#markerMode');
 function generateForm() {
     let formContent = '<form class="d-flex flex-column" id="formWindow">'
     formContent += '<label for="name"></label>'
-    formContent += '<input type="text" id="name" name="name" minlength="0" maxlength="20" placeholder="Name of walk..." />'
+    formContent += '<input type="text" id="name" name="name" minlength="5" maxlength="20" placeholder="Name of walk..." />'
     formContent += '<label for="length" class="mt-2">Length of Walk (mins)</label>'
     formContent += '<input type="number" id="length" name="length" min="0" max="500" />'
     formContent += '<label for="difficulty" class="mt-2">Difficulty</label>'
@@ -16,7 +16,7 @@ function generateForm() {
 }
 
 async function handleSubmit(position) {
-    let newRoute = {
+    let newWalk = {
         name: document.querySelector('#name').value,
         length: parseInt(document.querySelector('#length').value),
         difficulty: parseInt(document.querySelector('#difficulty').value),
@@ -24,10 +24,10 @@ async function handleSubmit(position) {
         markersArray: [position]
     }
 
-    return fetch('http://localhost:3000', {
+    return fetch('http://localhost:3000/walks', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newRoute)
+        body: JSON.stringify(newWalk)
     })
 }
 
@@ -60,4 +60,3 @@ async function displayWalkInfo(id) {
     document.querySelector('#difficulty').innerHTML = data.difficulty;
     document.querySelector('#markerMode').style.visibility = "visible";
 }
-
