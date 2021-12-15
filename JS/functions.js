@@ -1,3 +1,4 @@
+const markerMode = document.querySelector('#markerMode');
 
 function generateForm() {
     let formContent = '<form class="d-flex flex-column" id="formWindow">'
@@ -39,13 +40,14 @@ async function addMarkers(markersArray, map) {
     markersArray.forEach(function (marker) {
         let newMarker = new google.maps.Marker({
             position: marker.markersObject,
-            map,
+            map: map,
             title: marker.name
         })
         newMarker.id = marker.id;
         // Marker Event Listener
         google.maps.event.addListener(newMarker, "click", function() {
             displayWalkInfo(newMarker.id)
+            markerMode.value = newMarker.id
         })
     })
 }
@@ -58,3 +60,4 @@ async function displayWalkInfo(id) {
     document.querySelector('#difficulty').innerHTML = data.difficulty;
     document.querySelector('#markerMode').style.visibility = "visible";
 }
+
