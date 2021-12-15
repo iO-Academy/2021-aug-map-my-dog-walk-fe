@@ -8,16 +8,6 @@ async function myMap() {
     };
     const map = new google.maps.Map(document.querySelector("#map"),mapProp);
 
-    let testMarker =new google.maps.Marker({
-        position: {lat: 51.508742, lng: -0.120850},
-        map: map,
-        customInfo: "test",
-        startInstructions: 'weeeeee',
-        difficulty: 3,
-        length: 3,
-        name: 'test',
-        id: 'gob1'
-    })
     let response =  await fetch('http://localhost:3000/markers');
     let markers = await response.json();
 
@@ -43,16 +33,23 @@ async function myMap() {
         markerModeSubmit.style.visibility = 'visible'
         toggle = false
     })
-    markerModeSubmit.addEventListener('click', async (e) => {
+
+    markerModeSubmit.addEventListener('click', (e) => {
         e.preventDefault()
-        let value = markerMode.value
-        let url = 'http://localhost:3000/markers' + value
-        await fetch(url,{
+        let id = markerMode.value
+        let url = 'http://localhost:3000/markers/' + id
+        console.log(url)
+        fetch(url,{
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(miniMarkers)
+        }).then((response) => {
+            if(response.ok){
+                markerMode.value = ''
+                miniMarkers = []
+            }
         })
         toggle = true
         document.querySelector('#mapName').innerHTML = '';
@@ -60,9 +57,7 @@ async function myMap() {
         document.querySelector('#instructions').innerHTML = '';
         document.querySelector('#difficulty').innerHTML = '';
         markerMode.style.visibility = 'hidden'
-        markerMode.value = ''
         markerModeSubmit.style.visibility = 'hidden'
-
     })
 
     map.addListener("click", (mapsMouseEvent) => {
@@ -105,27 +100,18 @@ async function myMap() {
                 new google.maps.Point(0, 0),
                 new google.maps.Point(12, 35));
             let value = markerMode.value
-            let miniMarker = new google.maps.Marker({
+            let miniMarker = {
                 position: mapsMouseEvent.latLng,
-                map: map,
                 id: value,
                 icon: pinImage,
                 shadow: pinShadow
-            });
+            }
+            new google.maps.Marker({...miniMarker, map: map});
             miniMarkers.push(miniMarker)
+            console.log(miniMarkers)
         }
     })
 
     let markersArray = await fetchData('http://localhost:3000/markers');
-    google.maps.event.addListener( testMarker, "click", function() {
-        document.querySelector('#mapName').innerHTML = testMarker.name;
-        document.querySelector('#time').innerHTML = testMarker.length;
-        document.querySelector('#instructions').innerHTML = testMarker.startInstructions;
-        document.querySelector('#difficulty').innerHTML = testMarker.difficulty;
-        markerMode.style.visibility = "visible"
-        markerMode.value = testMarker.id
-    })
     addMarkers(markersArray, map);
-    let markerTest = map.Markers
-    console.log(markerTest)
 }

@@ -31,8 +31,8 @@ async function handleSubmit(position) {
     })
 }
 
-async function fetchData(url) {
-    let response =  await fetch(url);
+async function fetchData(url, method = {}) {
+    let response =  await fetch(url, method);
     return await response.json();
 }
 
