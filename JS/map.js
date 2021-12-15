@@ -8,18 +8,6 @@ async function myMap() {
     };
     const map = new google.maps.Map(document.querySelector("#map"),mapProp);
 
-    let response =  await fetch('http://localhost:3000/markers');
-    let markers = await response.json();
-
-    markers.forEach(function (marker) {
-        let newMarker = new google.maps.Marker({
-            position: marker.markersObject.position,
-            map,
-            title: marker.name
-        })
-        newMarker.id = marker.id;
-    })
-
     let infoWindow = new google.maps.InfoWindow({
         title: "Click anywhere to add a new route"
     });
