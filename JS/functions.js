@@ -15,7 +15,7 @@ function generateForm() {
 }
 
 async function handleSubmit(position) {
-    let newRoute = {
+    let newWalk = {
         name: document.querySelector('#name').value,
         length: parseInt(document.querySelector('#length').value),
         difficulty: parseInt(document.querySelector('#difficulty').value),
@@ -26,7 +26,7 @@ async function handleSubmit(position) {
     return fetch('http://localhost:3000', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newRoute)
+        body: JSON.stringify(newWalk)
     })
 }
 
