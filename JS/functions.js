@@ -36,16 +36,17 @@ async function fetchData(url, method = {}) {
     return await response.json();
 }
 
-async function addMarkers(markersArray, map) {
-    markersArray.forEach(function (marker) {
-        let newMarker = new google.maps.Marker({...marker.markersObject, map: map})
-        newMarker.id = marker.id;
-        newMarker.name = marker.name
-        newMarker.difficulty = marker.difficulty
+async function addMarkers(markersArray, map, callback) {
+    markersArray.forEach(function (walk) {
+        let newMarker = new google.maps.Marker({...walk.markersObject, map: map})
+        newMarker.id = walk.id;
+        newMarker.name = walk.name
+        newMarker.difficulty = walk.difficulty
         // Marker Event Listener
-        google.maps.event.addListener(newMarker, "click", function() {
+        google.maps.event.addListener(newMarker, "click", () => {
             displayWalkInfo(newMarker.id)
             markerMode.value = newMarker.id
+            callback()
         })
     })
 }
@@ -58,3 +59,4 @@ async function displayWalkInfo(id) {
     document.querySelector('#difficulty').innerHTML = data.difficulty;
     document.querySelector('#markerMode').style.visibility = "visible";
 }
+

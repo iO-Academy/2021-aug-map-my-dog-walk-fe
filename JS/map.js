@@ -100,5 +100,5 @@ async function myMap() {
     })
 
     let markersArray = await fetchData('http://localhost:3000/markers');
-    addMarkers(markersArray.data, map);
+    addMarkers(markersArray.data, map, () => infoWindow.close());
 }
