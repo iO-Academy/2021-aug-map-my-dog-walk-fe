@@ -41,6 +41,7 @@ async function addMarkers(markersArray, map) {
         let newMarker = new google.maps.Marker({...marker.markersObject, map: map})
         newMarker.id = marker.id;
         newMarker.name = marker.name
+        newMarker.difficulty = marker.difficulty
         // Marker Event Listener
         google.maps.event.addListener(newMarker, "click", function() {
             displayWalkInfo(newMarker.id)
