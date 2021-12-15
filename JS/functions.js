@@ -15,7 +15,7 @@ function generateForm() {
 }
 
 async function handleSubmit(position) {
-    let newRoute = {
+    let newWalk = {
         name: document.querySelector('#name').value,
         length: parseInt(document.querySelector('#length').value),
         difficulty: parseInt(document.querySelector('#difficulty').value),
@@ -23,10 +23,10 @@ async function handleSubmit(position) {
         markersArray: [position]
     }
 
-    return fetch('http://localhost:3000', {
+    return fetch('http://localhost:3000/walks', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newRoute)
+        body: JSON.stringify(newWalk)
     })
 }
 
@@ -40,7 +40,7 @@ async function addMarkers(markersArray, map) {
         let newMarker = new google.maps.Marker({
             position: marker.markersObject,
             map,
-            title: marker.name
+            title: marker.walkName
         })
         newMarker.id = marker.id;
     })
