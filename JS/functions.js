@@ -54,33 +54,34 @@ async function addMarkers(markersArray, map, callback) {
             icon: markerIcons[walk.difficulty]
         })
         google.maps.event.addListener(newMarker, "click", function() {
-            displayWalkInfo(newMarker.id);
-            console.log(newMarker.id)
+            displayWalkInfo(newMarker.id, map);
             markerMode.value = newMarker.id
             callback()
         })
     })
 }
 
-async function displayWalkInfo(id) {
+async function displayWalkInfo(id, map) {
     const data = await fetchData('http://localhost:3000/markers/' + id);
-    displayMiniMarkers(data.data)
+    displayMiniMarkers(data.data, map)
     document.querySelector('#mapName').innerHTML = data.data.walkName;
     document.querySelector('#time').innerHTML = data.data.length;
     document.querySelector('#instructions').innerHTML = data.data.startInstructions;
     document.querySelector('#difficulty').innerHTML = data.data.difficulty;
-document.querySelector('#markerMode').style.visibility = "visible";
+    document.querySelector('#markerMode').style.visibility = "visible";
 }
 
-function displayMiniMarkers(walkInfo) {
+function displayMiniMarkers(walkInfo, map) {
     console.log({walk: walkInfo})
-    walkInfo.markersArray.forEach((marker) => {
-        let newMarker = new google.maps.Marker({
-            position: marker.position,
-            map,
-            // title: walkInfo.walkName,
-            // id: marker.id,
-            // icon: marker.icon
-        })
+    walkInfo.markersArray.forEach((marker, index) => {
+        if (index !== 0) {
+            let newMarker = new google.maps.Marker({
+                position: marker.position,
+                map: map,
+                title: walkInfo.walkName,
+                id: marker.id,
+                icon: marker.icon
+            })
+        }
     })
 }
