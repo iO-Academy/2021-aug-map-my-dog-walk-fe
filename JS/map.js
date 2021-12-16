@@ -36,6 +36,8 @@ async function myMap() {
             if(data){
                 markerMode.value = ''
                 miniMarkers = []
+                location.reload()
+
             }
         })
         toggleClickListenerMode = true
@@ -66,7 +68,7 @@ async function myMap() {
             infoWindow.open(map)
 
             google.maps.event.addListener(infoWindow, 'domready', (e) => {
-                document.querySelector('#formWindow').addEventListener('submit',    async (e) => {
+                document.querySelector('#formWindow').addEventListener('submit',async (e) => {
                     e.preventDefault()
                     let response = handleSubmit(infoPosition)
                     infoWindow.close()
@@ -76,7 +78,7 @@ async function myMap() {
                     )
                 })
             });
-        }else{
+        } else {
             let pinColor = "FE7569";
             let pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
                 new google.maps.Size(21, 34),
