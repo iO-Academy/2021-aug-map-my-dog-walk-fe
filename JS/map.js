@@ -1,4 +1,3 @@
-
 async function myMap() {
     let mapProp= {
         center: {lat: 51.508742, lng: -0.120850},
@@ -35,3 +34,4 @@ async function myMap() {
     let markersArray = await fetchData('http://localhost:3000/markers');
     addMarkers(markersArray.data, map);
 }
+

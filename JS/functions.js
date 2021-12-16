@@ -45,9 +45,10 @@ async function addMarkers(markersArray, map) {
     }
 
     markersArray.forEach(function (marker) {
+        console.log(marker.markersObject)
         let newMarker = new google.maps.Marker({
-            position: marker.markersObject,
-            map,
+            ... marker.markersObject,
+            map: map,
             title: marker.walkName,
             id: marker.id,
             difficulty: marker.difficulty,
