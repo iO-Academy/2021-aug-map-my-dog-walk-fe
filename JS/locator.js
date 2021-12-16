@@ -13,8 +13,8 @@ function handleLocatorClick(e){
 }
 
 function showPosition(position) {
-    locationDiv.innerHTML = "Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude;
+    locationDiv.innerHTML = "<div>Latitude: " + position.coords.latitude + '</div>'
+        "<div>Longitude: " + position.coords.longitude + '</div>';
 }
 
 function errorCallback(){
