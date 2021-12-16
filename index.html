@@ -5,21 +5,31 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
     <title>Canine Compass</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="Style/stylesheet.css">
     <script src="JS/functions.js" defer></script>
     <script src="JS/locator.js" defer></script>
     <script src="JS/map.js" defer></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc5N22ZNLy5KbnCGfEnm4rhxbGXZvHUtA&callback=myMap" defer></script>
 </head>
 <body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    <div class="bg bg4"><svg viewBox="120,90,150,150">
+        <path class="path" opacity="1" fill="none" stroke="#f25f5c" stroke-width="1" d="M66.039,133.545c0,0-21-57,18-67s49-4,65,8
+            s30,41,53,27s66,4,58,32s-5,44,18,57s22,46,0,45s-54-40-68-16s-40,88-83,48s11-61-11-80s-79-7-70-41
+            C46.039,146.545,53.039,128.545,66.039,133.545z"/>
+    </svg></div>
     <div class="vh-100">
-        <h1 class="text-center p-3">Canine Compass</h1>
+        <h1 class="text-center p-3">Canine <br/> Compass</h1>
         <div class="container-lg h-75">
             <div class="row h-100 gx-2 gy-2">
                 <div class="col-md-9 col-sm-12 h-100">
-                    <div id="map" class="w-100 h-100 border border-secondary border-3"></div>
+                    <div id="map" class="w-100 h-100 border border-secondary border-5 rounded bg-light"></div>
                 </div>
-                <div class="col-md-3 col-sm-12 h-100-md border border-secondary border-3 d-flex flex-column justify-content-between">
+                <div class="col-md-3 col-sm-12 h-100-md border border-secondary border-5 rounded d-flex flex-column justify-content-between bg-light">
                     <div class="sideBar h-50 d-flex flex-column justify-content-between">
+                        <div id="addRoute"></div>
                         <div id="mapName">Map name</div>
                         <div>Estimated time (mins):
                             <span id="time"></span>
@@ -30,8 +40,10 @@
                         <div>Difficulty (1-5):
                             <span id="difficulty"></span>
                         </div>
+                        <button id="markerMode" value="" style="visibility: hidden">Marker Mode</button>
+                        <button id="markerModeSubmit" value="" style="visibility: hidden">Submit</button>
                     </div>
-                    <div class="border-top border-secondary border-3">
+                    <div class="border-top border-secondary border-2 rounded-0">
                         <button id="locationButton" class="mt-1">Get location!</button>
                         <div id="location"></div>
                         <div>
