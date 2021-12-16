@@ -95,29 +95,9 @@ async function myMap() {
             }
             new google.maps.Marker({...miniMarker, map: map});
             miniMarkers.push(miniMarker)
-            console.log(miniMarkers)
         }
     })
 
     let markersArray = await fetchData('http://localhost:3000/markers');
     addMarkers(markersArray.data, map, () => infoWindow.close())
-
-
-    let DamosMarkersArray = await fetchData('http://localhost:3000/markers/61b8a3073d78960b5f7dd718');
-    const walkRouteCoordinates = [];
-    markersArray = DamosMarkersArray.data.markersArray;
-    markersArray.forEach(function (marker) {
-        walkRouteCoordinates.push(marker.position);
-    })
-
-    const flightPath = new google.maps.Polyline({
-        path: walkRouteCoordinates,
-        geodesic: true,
-        strokeColor: "#f5081b",
-        strokeOpacity: 1.0,
-        strokeWeight: 2,
-    });
-
-    flightPath.setMap(map);
-
 }

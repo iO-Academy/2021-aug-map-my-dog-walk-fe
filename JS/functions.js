@@ -46,28 +46,61 @@ async function addMarkers(markersArray, map, callback) {
     }
 
     markersArray.forEach(function (walk) {
-        let newMarker = new google.maps.Marker({
-            ...walk.markersObject,
+        let newMarker = new google.maps.Marker({...walk.markersObject,
             map: map,
+            title: walk.walkName,
             id: walk.id,
-            name: walk.name,
             difficulty: walk.difficulty,
             icon: markerIcons[walk.difficulty]
         })
-
-        google.maps.event.addListener(newMarker, "click", () => {
-            displayWalkInfo(newMarker.id);
-            markerMode.value = newMarker.id;
-            callback();
+        google.maps.event.addListener(newMarker, "click", function() {
+            displayWalkInfo(newMarker.id, map);
+            markerMode.value = newMarker.id
+            callback()
         })
     })
 }
 
-async function displayWalkInfo(id) {
+async function displayWalkInfo(id, map) {
     const data = await fetchData('http://localhost:3000/markers/' + id);
-    document.querySelector('#mapName').innerHTML = data.data.name;
+    displayMiniMarkers(data.data, map);
+    displayMarkerLines(data.data.markersArray, id, map);
+    document.querySelector('#mapName').innerHTML = data.data.walkName;
     document.querySelector('#time').innerHTML = data.data.length;
     document.querySelector('#instructions').innerHTML = data.data.startInstructions;
     document.querySelector('#difficulty').innerHTML = data.data.difficulty;
-document.querySelector('#markerMode').style.visibility = "visible";
+    document.querySelector('#markerMode').style.visibility = "visible";
 }
+
+function displayMiniMarkers(walkInfo, map) {
+    console.log({walk: walkInfo})
+    walkInfo.markersArray.forEach((marker, index) => {
+        if (index !== 0) {
+            let newMarker = new google.maps.Marker({
+                position: marker.position,
+                map: map,
+                title: walkInfo.walkName,
+                id: marker.id,
+                icon: marker.icon
+            })
+        }
+    })
+}
+
+function displayMarkerLines(markersArray, id, map) {
+    const walkRouteCoordinates = [];
+    markersArray.forEach(function (marker) {
+        walkRouteCoordinates.push(marker.position);
+    })
+
+    const flightPath = new google.maps.Polyline({
+        path: walkRouteCoordinates,
+        geodesic: true,
+        strokeColor: "#f5081b",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+    });
+
+    flightPath.setMap(map);
+}
+
