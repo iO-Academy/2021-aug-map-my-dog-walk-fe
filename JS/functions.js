@@ -57,6 +57,7 @@ async function addMarkers(markersArray, map, callback) {
         })
         google.maps.event.addListener(newMarker, "click", function() {
             walkMiniMarkers = displayWalkInfo(newMarker.id, map, walkMiniMarkers);
+
             markerMode.value = newMarker.id
             callback()
         })
