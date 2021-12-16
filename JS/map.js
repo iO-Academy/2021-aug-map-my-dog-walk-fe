@@ -10,14 +10,14 @@ async function myMap() {
         title: "Click anywhere to add a new route"
     });
 
-    let toggle = true
+    let toggleClickListenerMode = true
     const markerModeSubmit = document.querySelector('#markerModeSubmit')
     const markerMode = document.querySelector('#markerMode');
 
     markerMode.addEventListener('click', (e) => {
         e.preventDefault()
         markerModeSubmit.style.visibility = 'visible'
-        toggle = false
+        toggleClickListenerMode = false
     })
 
     markerModeSubmit.addEventListener('click', (e) => {
@@ -38,7 +38,7 @@ async function myMap() {
                 miniMarkers = []
             }
         })
-        toggle = true
+        toggleClickListenerMode = true
         document.querySelector('#mapName').innerHTML = '';
         document.querySelector('#time').innerHTML = '';
         document.querySelector('#instructions').innerHTML = '';
@@ -49,7 +49,7 @@ async function myMap() {
 
     map.addListener("click", (mapsMouseEvent) => {
         infoWindow.close()
-        if(toggle){
+        if(toggleClickListenerMode){
             document.querySelector('#mapName').innerHTML = '';
             document.querySelector('#time').innerHTML = '';
             document.querySelector('#instructions').innerHTML = '';
