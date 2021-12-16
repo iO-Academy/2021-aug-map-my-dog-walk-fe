@@ -17,11 +17,11 @@ function generateForm() {
 
 async function handleSubmit(position) {
     let newWalk = {
-        name: document.querySelector('#name').value,
+        walkName: document.querySelector('#name').value,
         length: parseInt(document.querySelector('#length').value),
         difficulty: parseInt(document.querySelector('#difficulty').value),
         startInstructions: document.querySelector('#startInstructions').value,
-        markersArray: [position]
+        markersArray: [{position}]
     }
 
     return fetch('http://localhost:3000/walks', {
@@ -45,6 +45,8 @@ async function addMarkers(markersArray, map, callback) {
         "5": 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
     }
 
+    let walkMiniMarkers = [];
+
     markersArray.forEach(function (walk) {
         let newMarker = new google.maps.Marker({...walk.markersObject,
             map: map,
@@ -54,18 +56,55 @@ async function addMarkers(markersArray, map, callback) {
             icon: markerIcons[walk.difficulty]
         })
         google.maps.event.addListener(newMarker, "click", function() {
-            displayWalkInfo(newMarker.id);
+            walkMiniMarkers = displayWalkInfo(newMarker.id, map, walkMiniMarkers);
             markerMode.value = newMarker.id
             callback()
         })
     })
 }
 
-async function displayWalkInfo(id) {
+async function displayWalkInfo(id, map, walkMiniMarkers) {
     const data = await fetchData('http://localhost:3000/markers/' + id);
+    if (walkMiniMarkers.length !== 0) {
+        removeMiniMarkers(walkMiniMarkers)
+    }
+    walkMiniMarkers = displayMiniMarkers(data.data, map)
     document.querySelector('#mapName').innerHTML = data.data.walkName;
     document.querySelector('#time').innerHTML = data.data.length;
     document.querySelector('#instructions').innerHTML = data.data.startInstructions;
     document.querySelector('#difficulty').innerHTML = data.data.difficulty;
-document.querySelector('#markerMode').style.visibility = "visible";
+    document.querySelector('#markerMode').style.visibility = "visible";
+    return walkMiniMarkers;
 }
+
+function displayMiniMarkers(walkInfo, map) {
+    let newMiniMarkers = [];
+    walkInfo.markersArray.forEach((marker, index) => {
+        if (index !== 0) {
+            let newMarker = new google.maps.Marker({
+                position: marker.position,
+                map: map,
+                title: walkInfo.walkName,
+                id: marker.id,
+                icon: marker.icon
+            })
+            newMiniMarkers.push(newMarker)
+        }
+    })
+    return newMiniMarkers;
+}
+
+function removeMiniMarkers(previousMiniMarkers) {
+    previousMiniMarkers.then(miniMarkers => {
+        miniMarkers.forEach((marker) => {
+            marker.setMap(null)
+        })
+    })
+}
+
+function removeLargeMarkers(previousMarkersArray) {
+    previousMarkersArray.forEach((marker) => {
+        marker.setMap(null)
+    })
+}
+

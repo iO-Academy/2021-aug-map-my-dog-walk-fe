@@ -36,6 +36,8 @@ async function myMap() {
             if(data){
                 markerMode.value = ''
                 miniMarkers = []
+                location.reload()
+
             }
         })
         toggleClickListenerMode = true
@@ -66,17 +68,17 @@ async function myMap() {
             infoWindow.open(map)
 
             google.maps.event.addListener(infoWindow, 'domready', (e) => {
-                document.querySelector('#formWindow').addEventListener('submit',    async (e) => {
+                document.querySelector('#formWindow').addEventListener('submit',async (e) => {
                     e.preventDefault()
                     let response = handleSubmit(infoPosition)
                     infoWindow.close()
                     response.then(res => res.json()).then((response) => {
-                            document.querySelector('#addRoute').textContent = response.ok ? 'Route added!' : 'Something went wrong :('
+                            document.querySelector('#addRoute').textContent = response.message
                         }
                     )
                 })
             });
-        }else{
+        } else {
             let pinColor = "FE7569";
             let pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
                 new google.maps.Size(21, 34),
@@ -102,6 +104,12 @@ async function myMap() {
     addMarkers(markersArray.data, map, () => infoWindow.close())
 
     document.querySelector('#filterForm').addEventListener('submit',    async (e) => {
+        // console.log(markersArray);
+        // throw new Error();
+        if (markersArray.data.length !== 0) {
+            console.log('trying to remove');
+            removeLargeMarkers(markersArray.data);
+        }
         e.preventDefault();
         let difficultyFilter = '/' + document.querySelector('#difficultyFilter').value
         let timeFilter = '/' + document.querySelector('#timeFilter').value
