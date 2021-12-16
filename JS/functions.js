@@ -45,7 +45,6 @@ async function addMarkers(markersArray, map) {
     }
 
     markersArray.forEach(function (marker) {
-        console.log(marker.markersObject)
         let newMarker = new google.maps.Marker({
             ... marker.markersObject,
             map: map,
