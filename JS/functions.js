@@ -65,7 +65,6 @@ async function addMarkers(markersArray, map, callback) {
 
 async function displayWalkInfo(id, map, walkMiniMarkers) {
     const data = await fetchData('http://localhost:3000/markers/' + id);
-    // console.log(walkMiniMarkers)
     if (walkMiniMarkers.length !== 0) {
         removeMiniMarkers(walkMiniMarkers)
     }

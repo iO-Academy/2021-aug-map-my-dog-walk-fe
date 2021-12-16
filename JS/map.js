@@ -36,6 +36,8 @@ async function myMap() {
             if(data){
                 markerMode.value = ''
                 miniMarkers = []
+                location.reload()
+
             }
         })
         toggleClickListenerMode = true
