@@ -36,17 +36,26 @@ async function fetchData(url, method = {}) {
     return await response.json();
 }
 
-
 async function addMarkers(markersArray, map, callback) {
+    const markerIcons = {
+        "1": 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+        "2": 'http://maps.google.com/mapfiles/ms/icons/ltblue-dot.png',
+        "3": 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png',
+        "4": 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+        "5": 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
+    }
+
     markersArray.forEach(function (walk) {
-        console.log(walk.markersObject)
-        let newMarker = new google.maps.Marker({...walk.markersObject, map: map})
-        newMarker.id = walk.id;
-        newMarker.name = walk.name
-        newMarker.difficulty = walk.difficulty
-        // Marker Event Listener
-        google.maps.event.addListener(newMarker, "click", () => {
-            displayWalkInfo(newMarker.id)
+        let newMarker = new google.maps.Marker({...walk.markersObject,
+            map: map,
+            title: walk.walkName,
+            id: walk.id,
+            difficulty: walk.difficulty,
+            icon: markerIcons[walk.difficulty]
+        })
+        google.maps.event.addListener(newMarker, "click", function() {
+            displayWalkInfo(newMarker.id);
+            console.log(newMarker.id)
             markerMode.value = newMarker.id
             callback()
         })
@@ -55,7 +64,7 @@ async function addMarkers(markersArray, map, callback) {
 
 async function displayWalkInfo(id) {
     const data = await fetchData('http://localhost:3000/markers/' + id);
-    document.querySelector('#mapName').innerHTML = data.data.name;
+    document.querySelector('#mapName').innerHTML = data.data.walkName;
     document.querySelector('#time').innerHTML = data.data.length;
     document.querySelector('#instructions').innerHTML = data.data.startInstructions;
     document.querySelector('#difficulty').innerHTML = data.data.difficulty;

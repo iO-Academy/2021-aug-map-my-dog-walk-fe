@@ -95,7 +95,6 @@ async function myMap() {
             }
             new google.maps.Marker({...miniMarker, map: map});
             miniMarkers.push(miniMarker)
-            console.log(miniMarkers)
         }
     })
 
