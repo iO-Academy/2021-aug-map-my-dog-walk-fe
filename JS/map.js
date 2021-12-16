@@ -68,7 +68,7 @@ async function myMap() {
             infoWindow.open(map)
 
             google.maps.event.addListener(infoWindow, 'domready', (e) => {
-                document.querySelector('#formWindow').addEventListener('submit',    async (e) => {
+                document.querySelector('#formWindow').addEventListener('submit',async (e) => {
                     e.preventDefault()
                     let response = handleSubmit(infoPosition)
                     infoWindow.close()
