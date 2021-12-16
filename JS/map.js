@@ -1,5 +1,9 @@
 async function myMap() {
     let miniMarkers = []
+    let toggleClickListenerMode = true
+    const markerModeSubmit = document.querySelector('#markerModeSubmit')
+    const markerMode = document.querySelector('#markerMode');
+
     let mapProp= {
         center: {lat: 51.508742, lng: -0.120850},
         zoom:5
@@ -9,10 +13,6 @@ async function myMap() {
     let infoWindow = new google.maps.InfoWindow({
         title: "Click anywhere to add a new route"
     });
-
-    let toggleClickListenerMode = true
-    const markerModeSubmit = document.querySelector('#markerModeSubmit')
-    const markerMode = document.querySelector('#markerMode');
 
     markerMode.addEventListener('click', (e) => {
         e.preventDefault()
