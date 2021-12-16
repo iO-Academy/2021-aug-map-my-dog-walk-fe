@@ -56,7 +56,7 @@ async function addMarkers(markersArray, map, callback) {
             icon: markerIcons[walk.difficulty]
         })
         google.maps.event.addListener(newMarker, "click", function() {
-            displayWalkInfo(newMarker.id, map, walkMiniMarkers);
+            walkMiniMarkers = displayWalkInfo(newMarker.id, map, walkMiniMarkers);
             markerMode.value = newMarker.id
             callback()
         })
@@ -74,10 +74,11 @@ async function displayWalkInfo(id, map, walkMiniMarkers) {
     document.querySelector('#instructions').innerHTML = data.data.startInstructions;
     document.querySelector('#difficulty').innerHTML = data.data.difficulty;
     document.querySelector('#markerMode').style.visibility = "visible";
+    return walkMiniMarkers;
 }
 
 function displayMiniMarkers(walkInfo, map) {
-    let allMiniMarkers = [];
+    let newMiniMarkers = [];
     walkInfo.markersArray.forEach((marker, index) => {
         if (index !== 0) {
             let newMarker = new google.maps.Marker({
@@ -87,14 +88,16 @@ function displayMiniMarkers(walkInfo, map) {
                 id: marker.id,
                 icon: marker.icon
             })
-            allMiniMarkers.push(newMarker)
+            newMiniMarkers.push(newMarker)
         }
     })
-    return allMiniMarkers;
+    return newMiniMarkers;
 }
 
 function removeMiniMarkers(previousMiniMarkers) {
-    previousMiniMarkers.forEach((marker) => {
-        marker.setMap(null)
+    previousMiniMarkers.then(miniMarkers => {
+        miniMarkers.forEach((marker) => {
+            marker.setMap(null)
+        })
     })
 }
