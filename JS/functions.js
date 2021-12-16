@@ -36,8 +36,10 @@ async function fetchData(url, method = {}) {
     return await response.json();
 }
 
+
 async function addMarkers(markersArray, map, callback) {
     markersArray.forEach(function (walk) {
+        console.log(walk.markersObject)
         let newMarker = new google.maps.Marker({...walk.markersObject, map: map})
         newMarker.id = walk.id;
         newMarker.name = walk.name
@@ -53,10 +55,10 @@ async function addMarkers(markersArray, map, callback) {
 
 async function displayWalkInfo(id) {
     const data = await fetchData('http://localhost:3000/markers/' + id);
-    document.querySelector('#mapName').innerHTML = data.name;
-    document.querySelector('#time').innerHTML = data.length;
-    document.querySelector('#instructions').innerHTML = data.startInstructions;
-    document.querySelector('#difficulty').innerHTML = data.difficulty;
-    document.querySelector('#markerMode').style.visibility = "visible";
+    document.querySelector('#mapName').innerHTML = data.data.name;
+    document.querySelector('#time').innerHTML = data.data.length;
+    document.querySelector('#instructions').innerHTML = data.data.startInstructions;
+    document.querySelector('#difficulty').innerHTML = data.data.difficulty;
+document.querySelector('#markerMode').style.visibility = "visible";
 }
 
