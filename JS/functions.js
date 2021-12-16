@@ -1,3 +1,4 @@
+const markerMode = document.querySelector('#markerMode');
 
 function generateForm() {
     let formContent = '<form class="d-flex flex-column" id="formWindow">'
@@ -30,12 +31,12 @@ async function handleSubmit(position) {
     })
 }
 
-async function fetchData(url) {
-    let response =  await fetch(url);
+async function fetchData(url, method = {}) {
+    let response =  await fetch(url, method);
     return await response.json();
 }
 
-async function addMarkers(markersArray, map) {
+async function addMarkers(markersArray, map, callback) {
     const markerIcons = {
         "1": 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
         "2": 'http://maps.google.com/mapfiles/ms/icons/ltblue-dot.png',
@@ -44,17 +45,20 @@ async function addMarkers(markersArray, map) {
         "5": 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
     }
 
-    markersArray.forEach(function (marker) {
+    markersArray.forEach(function (walk) {
         let newMarker = new google.maps.Marker({
-            position: marker.markersObject,
-            map,
-            title: marker.walkName,
-            id: marker.id,
-            difficulty: marker.difficulty,
-            icon: markerIcons[marker.difficulty]
+            ...walk.markersObject,
+            map: map,
+            id: walk.id,
+            name: walk.name,
+            difficulty: walk.difficulty,
+            icon: markerIcons[walk.difficulty]
         })
-        google.maps.event.addListener(newMarker, "click", function() {
+
+        google.maps.event.addListener(newMarker, "click", () => {
             displayWalkInfo(newMarker.id);
+            markerMode.value = newMarker.id;
+            callback();
         })
     })
 }
@@ -65,4 +69,5 @@ async function displayWalkInfo(id) {
     document.querySelector('#time').innerHTML = data.data.length;
     document.querySelector('#instructions').innerHTML = data.data.startInstructions;
     document.querySelector('#difficulty').innerHTML = data.data.difficulty;
+document.querySelector('#markerMode').style.visibility = "visible";
 }
