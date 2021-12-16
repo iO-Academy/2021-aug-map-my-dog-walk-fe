@@ -61,8 +61,22 @@ async function addMarkers(markersArray, map) {
 
 async function displayWalkInfo(id) {
     const data = await fetchData('http://localhost:3000/markers/' + id);
+    displayMiniMarkers(data.data)
     document.querySelector('#mapName').innerHTML = data.data.name;
     document.querySelector('#time').innerHTML = data.data.length;
     document.querySelector('#instructions').innerHTML = data.data.startInstructions;
     document.querySelector('#difficulty').innerHTML = data.data.difficulty;
+}
+
+function displayMiniMarkers(walkInfo) {
+    console.log({walk: walkInfo})
+    walkInfo.markersArray.forEach((marker) => {
+        let newMarker = new google.maps.Marker({
+            position: marker.position,
+            map,
+            // title: walkInfo.walkName,
+            // id: marker.id,
+            // icon: marker.icon
+        })
+    })
 }
