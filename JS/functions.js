@@ -43,5 +43,17 @@ async function addMarkers(markersArray, map) {
             title: marker.walkName
         })
         newMarker.id = marker.id;
+        // Marker Event Listener
+        google.maps.event.addListener(newMarker, "click", function() {
+            displayWalkInfo(newMarker.id)
+        })
     })
+}
+
+async function displayWalkInfo(id) {
+    const data = await fetchData('http://localhost:3000/markers/' + id);
+    document.querySelector('#mapName').innerHTML = data.data.name;
+    document.querySelector('#time').innerHTML = data.data.length;
+    document.querySelector('#instructions').innerHTML = data.data.startInstructions;
+    document.querySelector('#difficulty').innerHTML = data.data.difficulty;
 }
