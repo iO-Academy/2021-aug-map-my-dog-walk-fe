@@ -44,7 +44,6 @@ async function addMarkers(markersArray, map, callback) {
         "4": 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
         "5": 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
     }
-
     markersArray.forEach(function (walk) {
         let newMarker = new google.maps.Marker({...walk.markersObject,
             map: map,
@@ -55,7 +54,6 @@ async function addMarkers(markersArray, map, callback) {
         })
         google.maps.event.addListener(newMarker, "click", function() {
             displayWalkInfo(newMarker.id);
-            console.log(newMarker.id)
             markerMode.value = newMarker.id
             callback()
         })
@@ -70,4 +68,3 @@ async function displayWalkInfo(id) {
     document.querySelector('#difficulty').innerHTML = data.data.difficulty;
 document.querySelector('#markerMode').style.visibility = "visible";
 }
-
