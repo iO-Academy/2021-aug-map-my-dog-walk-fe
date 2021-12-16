@@ -55,7 +55,6 @@ async function addMarkers(markersArray, map, callback) {
         })
         google.maps.event.addListener(newMarker, "click", function() {
             displayWalkInfo(newMarker.id);
-            console.log(newMarker.id)
             markerMode.value = newMarker.id
             callback()
         })
@@ -70,4 +69,3 @@ async function displayWalkInfo(id) {
     document.querySelector('#difficulty').innerHTML = data.data.difficulty;
 document.querySelector('#markerMode').style.visibility = "visible";
 }
-

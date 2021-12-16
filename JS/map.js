@@ -100,4 +100,26 @@ async function myMap() {
 
     let markersArray = await fetchData('http://localhost:3000/markers');
     addMarkers(markersArray.data, map, () => infoWindow.close())
+
+    document.querySelector('#filterForm').addEventListener('submit',    async (e) => {
+        e.preventDefault();
+        let difficultyFilter = '/' + document.querySelector('#difficultyFilter').value
+        let timeFilter = '/' + document.querySelector('#timeFilter').value
+        let filteredMarkersArray = [];
+
+        if(difficultyFilter !== '/' && timeFilter !== '/') {
+            filteredMarkersArray = await fetchData('http://localhost:3000/markers/difficultyFilter' + difficultyFilter + '/timeFilter' + timeFilter);
+        } else if (difficultyFilter !== '/' && timeFilter === '/') {
+            filteredMarkersArray = await fetchData('http://localhost:3000/markers/difficultyFilter' + difficultyFilter + '/timeFilter/');
+        } else if (timeFilter !== '/' && difficultyFilter === '/') {
+            filteredMarkersArray = await fetchData('http://localhost:3000/markers/difficultyFilter' + '/timeFilter' + timeFilter);
+        }
+
+        console.log(filteredMarkersArray.data);
+
+        if (filteredMarkersArray.data.length !== 0) {
+            console.log('trying');
+            addMarkers(filteredMarkersArray.data, map, () => infoWindow.close())
+        }
+    })
 }
