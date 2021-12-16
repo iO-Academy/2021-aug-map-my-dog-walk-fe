@@ -61,8 +61,8 @@ async function addMarkers(markersArray, map) {
 
 async function displayWalkInfo(id) {
     const data = await fetchData('http://localhost:3000/markers/' + id);
-    document.querySelector('#mapName').innerHTML = data.name;
-    document.querySelector('#time').innerHTML = data.length;
-    document.querySelector('#instructions').innerHTML = data.startInstructions;
-    document.querySelector('#difficulty').innerHTML = data.difficulty;
+    document.querySelector('#mapName').innerHTML = data.data.name;
+    document.querySelector('#time').innerHTML = data.data.length;
+    document.querySelector('#instructions').innerHTML = data.data.startInstructions;
+    document.querySelector('#difficulty').innerHTML = data.data.difficulty;
 }
