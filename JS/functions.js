@@ -3,7 +3,7 @@ const markerMode = document.querySelector('#markerMode');
 function generateForm() {
     let formContent = '<form class="d-flex flex-column" id="formWindow">'
     formContent += '<label for="name"></label>'
-    formContent += '<input type="text" id="name" name="name" minlength="0" maxlength="20" placeholder="Name of walk..." />'
+    formContent += '<input type="text" id="name" name="name" minlength="5" maxlength="20" placeholder="Name of walk..." />'
     formContent += '<label for="length" class="mt-2">Length of Walk (mins)</label>'
     formContent += '<input type="number" id="length" name="length" min="0" max="500" />'
     formContent += '<label for="difficulty" class="mt-2">Difficulty</label>'
@@ -16,27 +16,27 @@ function generateForm() {
 }
 
 async function handleSubmit(position) {
-    let newRoute = {
-        name: document.querySelector('#name').value,
+    let newWalk = {
+        walkName: document.querySelector('#name').value,
         length: parseInt(document.querySelector('#length').value),
         difficulty: parseInt(document.querySelector('#difficulty').value),
         startInstructions: document.querySelector('#startInstructions').value,
-        markersArray: [position]
+        markersArray: [{position}]
     }
 
-    return fetch('http://localhost:3000', {
+    return fetch('http://localhost:3000/walks', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newRoute)
+        body: JSON.stringify(newWalk)
     })
 }
 
-async function fetchData(url) {
-    let response =  await fetch(url);
+async function fetchData(url, method = {}) {
+    let response =  await fetch(url, method);
     return await response.json();
 }
 
-async function addMarkers(markersArray, map) {
+async function addMarkers(markersArray, map, callback) {
     const markerIcons = {
         "1": 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
         "2": 'http://maps.google.com/mapfiles/ms/icons/ltblue-dot.png',
@@ -44,28 +44,28 @@ async function addMarkers(markersArray, map) {
         "4": 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
         "5": 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png'
     }
-
-    markersArray.forEach(function (marker) {
-        let newMarker = new google.maps.Marker({
-            position: marker.markersObject,
-            map,
-            title: marker.name,
-            id: marker.id,
-            difficulty: marker.difficulty,
-            icon: markerIcons[marker.difficulty]
+    markersArray.forEach(function (walk) {
+        let newMarker = new google.maps.Marker({...walk.markersObject,
+            map: map,
+            title: walk.walkName,
+            id: walk.id,
+            difficulty: walk.difficulty,
+            icon: markerIcons[walk.difficulty]
         })
         google.maps.event.addListener(newMarker, "click", function() {
-            displayWalkInfo(newMarker.id)
+            displayWalkInfo(newMarker.id);
+            console.log(newMarker.id)
             markerMode.value = newMarker.id
+            callback()
         })
     })
 }
 
 async function displayWalkInfo(id) {
     const data = await fetchData('http://localhost:3000/markers/' + id);
-    document.querySelector('#mapName').innerHTML = data.name;
-    document.querySelector('#time').innerHTML = data.length;
-    document.querySelector('#instructions').innerHTML = data.startInstructions;
-    document.querySelector('#difficulty').innerHTML = data.difficulty;
-    document.querySelector('#markerMode').style.visibility = "visible";
+    document.querySelector('#mapName').innerHTML = data.data.walkName;
+    document.querySelector('#time').innerHTML = data.data.length;
+    document.querySelector('#instructions').innerHTML = data.data.startInstructions;
+    document.querySelector('#difficulty').innerHTML = data.data.difficulty;
+document.querySelector('#markerMode').style.visibility = "visible";
 }
