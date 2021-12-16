@@ -19,3 +19,4 @@ function showPosition(position) {
 function errorCallback(){
     locationDiv.innerHTML = '<div>Location not found</div>'
 }
+
