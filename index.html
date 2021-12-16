@@ -17,14 +17,32 @@
                 <div class="col-md-9 col-sm-12 h-100">
                     <div id="map" class="w-100 h-100 border border-secondary border-3"></div>
                 </div>
-                <div class="col-md-3 col-sm-12 h-100-md border border-secondary border-3">
+                <div class="col-md-3 col-sm-12 h-100-md border border-secondary border-3 d-flex flex-column justify-content-between">
                     <div class="sideBar h-50 d-flex flex-column justify-content-between">
                         <div id="addRoute"></div>
-                        <div>Map name</div>
-                        <div>Distance/time</div>
+                        <div id="mapName">Map name</div>
+                        <div>Estimated time (mins):
+                            <span id="time"></span>
+                        </div>
+                        <div>Start Instructions:
+                            <span id="instructions"></span>
+                        </div>
+                        <div>Difficulty (1-5):
+                            <span id="difficulty"></span>
+                        </div>
+                        <button id="markerMode" value="" style="visibility: hidden">Marker Mode</button>
+                        <button id="markerModeSubmit" value="" style="visibility: hidden">Submit</button>
+                    </div>
+                    <div class="border-top border-secondary border-3">
                         <div>
-                            <h2>Further walk info</h2>
-                            <p>text here</p>
+                            <p>Difficulty Key:</p>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                            <p>1<img src="http://maps.google.com/mapfiles/ms/icons/green-dot.png" /></p>
+                            <p>2<img src="http://maps.google.com/mapfiles/ms/icons/ltblue-dot.png" /></p>
+                            <p>3<img src="http://maps.google.com/mapfiles/ms/icons/yellow-dot.png" /></p>
+                            <p>4<img src="http://maps.google.com/mapfiles/ms/icons/red-dot.png" /></p>
+                            <p>5<img src="http://maps.google.com/mapfiles/ms/icons/purple-dot.png" /></p>
                         </div>
                     </div>
                 </div>
