@@ -71,12 +71,12 @@ async function myMap() {
                     let response = handleSubmit(infoPosition)
                     infoWindow.close()
                     response.then(res => res.json()).then((response) => {
-                            document.querySelector('#addRoute').textContent = response.ok ? 'Route added!' : 'Something went wrong :('
+                            document.querySelector('#addRoute').textContent = response.message
                         }
                     )
                 })
             });
-        }else{
+        } else {
             let pinColor = "FE7569";
             let pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
                 new google.maps.Size(21, 34),
