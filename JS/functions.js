@@ -17,11 +17,11 @@ function generateForm() {
 
 async function handleSubmit(position) {
     let newWalk = {
-        name: document.querySelector('#name').value,
+        walkName: document.querySelector('#name').value,
         length: parseInt(document.querySelector('#length').value),
         difficulty: parseInt(document.querySelector('#difficulty').value),
         startInstructions: document.querySelector('#startInstructions').value,
-        markersArray: [position]
+        markersArray: [{position}]
     }
 
     return fetch('http://localhost:3000/walks', {
