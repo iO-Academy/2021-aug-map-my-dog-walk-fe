@@ -91,7 +91,7 @@ function displayMiniMarkers(walkInfo, map) {
                 map: map,
                 title: walkInfo.walkName,
                 id: marker.id,
-                icon: marker.icon
+                icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
             })
             newMiniMarkers.push(newMarker)
         }
