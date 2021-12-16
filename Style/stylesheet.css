@@ -4,14 +4,13 @@
 
 h1 {
     background-image: url(https://media0.giphy.com/media/R1MlWX6NHdJogpH0HO/giphy.gif?cid=ecf05e47fseno6hiyxq5juaaho8bwz9ucp26dcn0268d0i9k&rid=giphy.gif&ct=g);
-    background-size: 390px;
+    background-size: 290px;
     background-position-x: center;
-    background-repeat: round;
     color: transparent;
     -webkit-background-clip: text;
     text-transform: uppercase;
-    font-size: 100px;
-    line-height: .75;
+    line-height: 1.00;
+    font-size: 75px;
 }
 
 body {
