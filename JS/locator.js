@@ -13,10 +13,10 @@ function handleLocatorClick(e){
 }
 
 function showPosition(position) {
-    locationDiv.innerHTML = '<div>Latitude: ' + position.coords.latitude + '</div>' +
-        '<div>Longitude: ' + position.coords.longitude + '</div>';
+    locationDiv.innerHTML = '<div>Latitude: ' + position.coords.latitude + '</div>' + '<div>Longitude: ' + position.coords.longitude + '</div>';
 }
 
 function errorCallback(){
     locationDiv.innerHTML = '<div>Location not found</div>'
 }
+
